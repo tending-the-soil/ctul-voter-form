@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Voter Canvass Form — CTUL</title>
+<title>Formulario de Canvass Electoral — CTUL Action Fund</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -121,8 +121,8 @@ textarea{resize:vertical;min-height:80px}
     <div><label class="field-label" data-t="date_label">Date of Canvass</label><input type="date" id="canvassDate"></div>
     <div><label class="field-label" data-t="time_label">Time of Canvass</label><input type="time" id="canvassTime"></div>
   </div>
-  <label class="field-label" data-t="canvasser_email">Canvasser's Email</label>
-  <input type="email" id="canvasserEmail" placeholder="name@ctulorganizing.org">
+  <label class="field-label" data-t="canvasser_name">Canvasser's Name</label>
+  <input type="text" id="canvasserName" placeholder="Your name">
 </div>
 
 <!-- SECTION 2 -->
@@ -146,6 +146,7 @@ textarea{resize:vertical;min-height:80px}
 
     <label class="option" onclick="selectRadio(this,'langGroup')"><input type="radio" name="language" value="Other"> <span data-t="other">Other</span></label>
   </div>
+  <input type="text" id="langOther" placeholder="Specify language..." data-tp="lang_other_ph" style="display:none">
 </div>
 
 <!-- SECTION 3 -->
@@ -165,6 +166,7 @@ textarea{resize:vertical;min-height:80px}
     <span class="chip" onclick="toggleChip(this)" data-t="issue_child">Childcare</span>
     <span class="chip" onclick="toggleChip(this)" data-t="other">Other</span>
   </div>
+  <input type="text" id="issuesOther" placeholder="Other issues..." data-tp="issues_other_ph" style="display:none">
 </div>
 
 <!-- SECTION 4 -->
@@ -250,7 +252,7 @@ textarea{resize:vertical;min-height:80px}
     <label class="option" onclick="selectRadio(this,'voteplanGroup')"><input type="radio" name="voteplan" value="Undecided"> <span data-t="undecided">Undecided</span></label>
     <label class="option" onclick="selectRadio(this,'voteplanGroup')"><input type="radio" name="voteplan" value="Not Planning to Vote"> <span data-t="not_voting">Not planning to vote</span></label>
   </div>
-  <label class="field-label" data-t="keith_q">Are you planning to vote for Keith?</label>
+  <label class="field-label" data-t="keith_q">Are you planning to vote for Keith Ellison for Attorney General of Minnesota?</label>
   <div class="option-group" id="keithGroup">
     <label class="option" onclick="selectRadio(this,'keithGroup')"><input type="radio" name="keith" value="Yes"> <span data-t="yes">Yes</span></label>
     <label class="option" onclick="selectRadio(this,'keithGroup')"><input type="radio" name="keith" value="Leaning Yes"> <span data-t="leaning_yes">Leaning yes</span></label>
@@ -290,6 +292,8 @@ textarea{resize:vertical;min-height:80px}
 
   <div class="toggle-row"><div class="toggle-label"><span data-t="tog5">5. Wants to be invited to our events</span><span class="sub" data-t="tog5_sub">Add to event invite list for rallies, town halls, drives</span></div><label class="toggle"><input type="checkbox" id="togEvents"><span class="slider"></span></label></div>
 
+  <div class="toggle-row"><div class="toggle-label"><span data-t="tog6">6. Would like to receive more information about workers' rights</span><span class="sub" data-t="tog6_sub">Send workers' rights resources and updates</span></div><label class="toggle"><input type="checkbox" id="togWorkersRights"><span class="slider"></span></label></div>
+
   <label class="field-label" style="margin-top:16px" data-t="notes_label">Notes / Follow-Up Details</label>
   <textarea id="notes" rows="4" data-tp="notes_ph"></textarea>
 </div>
@@ -313,7 +317,7 @@ en: {
   title:"Voter Canvass Form", subtitle:"Record conversations · Connect voters with resources · Build power",
   s1_title:"📍 Canvass Information", s1_sub:"Where and when this conversation happened",
   canvass_addr:"Canvass Address / Location", canvass_addr_ph:"e.g. 1500 Cedar Ave S, Minneapolis",
-  date_label:"Date of Canvass", time_label:"Time of Canvass", canvasser_email:"Canvasser's Email",
+  date_label:"Date of Canvass", time_label:"Time of Canvass", canvasser_name:"Canvasser's Name",
   s2_title:"👤 Voter Contact Information", s2_sub:"Basic info about the voter",
   full_name:"Full Name", full_name_ph:"First and last name",
   address:"Address", address_ph:"Street address, Minneapolis, MN",
@@ -350,7 +354,7 @@ en: {
   s5_title:"📊 Voting Plan", vote_plan_q:"How do you plan to vote?",
   by_mail:"By mail / absentee", early_vote:"In person — early voting", election_day:"In person — Election Day",
   undecided:"Undecided", not_voting:"Not planning to vote",
-  keith_q:"Are you planning to vote for Keith?",
+  keith_q:"Are you planning to vote for Keith Ellison for Attorney General of Minnesota?",
   leaning_yes:"Leaning yes", leaning_no:"Leaning no", declined:"Declined to say",
   s6_title:"🤝 Support & Follow-Up", s6_sub:"What does this person need? Toggle on everything that applies.",
   tog1:"1. Reminder to register to vote", tog1_sub:"We'll send registration resources and reminders",
@@ -358,6 +362,8 @@ en: {
   tog3:"3. Needs help finding their polling place", tog3_sub:"We'll look up their location based on their address",
   tog4:"4. Wants to know their voting rights", tog4_sub:"Email them a link to voting rights info",
   tog5:"5. Wants to be invited to our events", tog5_sub:"Add to event invite list for rallies, town halls, drives",
+  tog6:"6. Would like to receive more information about workers' rights", tog6_sub:"Send workers' rights resources and updates",
+  issues_other_ph:"Other issues...", lang_other_ph:"Specify language...",
   poll_find:"📍 Find Polling Place", poll_hennepin:"For Minneapolis / Hennepin County voters:",
   poll_btn:"🔍 MN Secretary of State Poll Finder", or_call:"Or call:",
   poll_paste:"Polling station info (paste result here):", poll_paste_ph:"Voter's polling place name and address...",
@@ -370,7 +376,7 @@ es: {
   title:"Formulario de Canvass Electoral", subtitle:"Registrar conversaciones · Conectar votantes con recursos · Construir poder",
   s1_title:"📍 Información del Canvass", s1_sub:"Dónde y cuándo ocurrió esta conversación",
   canvass_addr:"Dirección / Ubicación del Canvass", canvass_addr_ph:"ej. 1500 Cedar Ave S, Minneapolis",
-  date_label:"Fecha del Canvass", time_label:"Hora del Canvass", canvasser_email:"Correo del Canvasser",
+  date_label:"Fecha del Canvass", time_label:"Hora del Canvass", canvasser_name:"Nombre del Canvasser",
   s2_title:"👤 Información de Contacto del Votante", s2_sub:"Información básica sobre el votante",
   full_name:"Nombre Completo", full_name_ph:"Nombre y apellido",
   address:"Dirección", address_ph:"Dirección, Minneapolis, MN",
@@ -406,7 +412,7 @@ es: {
   s5_title:"📊 Plan de Votación", vote_plan_q:"¿Cómo planea votar?",
   by_mail:"Por correo / ausente", early_vote:"En persona — votación anticipada", election_day:"En persona — Día de la Elección",
   undecided:"Indeciso/a", not_voting:"No planea votar",
-  keith_q:"¿Planea votar por Keith?",
+  keith_q:"¿Planea votar por Keith Ellison para Fiscal General de Minnesota?",
   leaning_yes:"Inclinado a sí", leaning_no:"Inclinado a no", declined:"Prefiere no decir",
   s6_title:"🤝 Apoyo y Seguimiento", s6_sub:"¿Qué necesita esta persona? Active todo lo que corresponda.",
   tog1:"1. Recordatorio para registrarse para votar", tog1_sub:"Enviaremos recursos y recordatorios de registro",
@@ -414,6 +420,8 @@ es: {
   tog3:"3. Necesita ayuda para encontrar su lugar de votación", tog3_sub:"Buscaremos su ubicación según su dirección",
   tog4:"4. Quiere conocer sus derechos de votación", tog4_sub:"Enviarle un enlace con información sobre derechos",
   tog5:"5. Quiere ser invitado/a a nuestros eventos", tog5_sub:"Agregar a la lista de invitaciones para mítines, asambleas",
+  tog6:"6. Le gustaría recibir más información sobre los derechos de los trabajadores", tog6_sub:"Enviar recursos y actualizaciones sobre derechos laborales",
+  issues_other_ph:"Otros temas...", lang_other_ph:"Especifique el idioma...",
   poll_find:"📍 Encontrar Lugar de Votación", poll_hennepin:"Para votantes de Minneapolis / Condado de Hennepin:",
   poll_btn:"🔍 Buscador de Lugares de Votación de MN", or_call:"O llame:",
   poll_paste:"Información del lugar de votación (pegue aquí):", poll_paste_ph:"Nombre y dirección del lugar de votación...",
@@ -456,9 +464,22 @@ const CONFIG = {
 // ── UI ──
 function selectRadio(el, groupId) {
   document.getElementById(groupId).querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected'); el.querySelector('input').checked = true; updateProgress();
+  el.classList.add('selected'); el.querySelector('input').checked = true;
+  // Show/hide language Other text field
+  if (groupId === 'langGroup') {
+    const val = el.querySelector('input').value;
+    document.getElementById('langOther').style.display = val === 'Other' ? 'block' : 'none';
+  }
+  updateProgress();
 }
-function toggleChip(el) { el.classList.toggle('selected'); updateProgress(); }
+function toggleChip(el) {
+  el.classList.toggle('selected');
+  // Show/hide "Other" text field for issues
+  if (el.getAttribute('data-t') === 'other') {
+    document.getElementById('issuesOther').style.display = el.classList.contains('selected') ? 'block' : 'none';
+  }
+  updateProgress();
+}
 function showEl(id) { document.getElementById(id).style.display = 'block'; }
 function hideEl(id) { document.getElementById(id).style.display = 'none'; }
 function handleEligibility(v) {
@@ -513,7 +534,7 @@ async function submitForm() {
     "Voting Plan": getRadioValue('voteplan'),
     "Planning to Vote for Keith": getRadioValue('keith'),
     "Contact Status": "Contacted",
-    "Canvasser Email": document.getElementById('canvasserEmail').value.trim(),
+    "Canvasser Name": document.getElementById('canvasserName').value.trim(),
     "Organization Email": CONFIG.orgEmail,
     "Form Submitted At": new Date().toISOString(),
     "Date of First Contact": document.getElementById('canvassDate').value || new Date().toISOString().split('T')[0],
@@ -523,7 +544,8 @@ async function submitForm() {
     "Needs Polling Location": document.getElementById('togPolling').checked,
     "Wants Voting Rights Info": document.getElementById('togRights').checked,
     "Wants Event Invites": document.getElementById('togEvents').checked,
-    "Follow-Up Needed": document.getElementById('togRegister').checked || document.getElementById('togVoteReminder').checked || document.getElementById('togPolling').checked || document.getElementById('togRights').checked,
+    "Wants Workers Rights Info": document.getElementById('togWorkersRights').checked,
+    "Follow-Up Needed": document.getElementById('togRegister').checked || document.getElementById('togVoteReminder').checked || document.getElementById('togPolling').checked || document.getElementById('togRights').checked || document.getElementById('togWorkersRights').checked,
   };
   const party = getRadioValue('party'); if (party) fields["Party Affiliation"] = party;
   const eligCheck = getRadioValue('eligCheck'); if (eligCheck) fields["Eligibility Check Result"] = eligCheck;
@@ -543,7 +565,7 @@ async function submitForm() {
     status.className = 'status-msg success';
     status.textContent = `✅ ${voterName} — ID: ${data.records[0].id}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => { if (confirm('Clear form for next voter?')) resetForm(); }, 1500);
+    setTimeout(() => { if (confirm('¿Limpiar formulario para el siguiente votante? / Clear form for next voter?')) resetForm(); }, 1500);
   } catch (err) {
     status.className = 'status-msg error';
     status.textContent = `❌ ${err.message.slice(0, 200)}`;
@@ -566,13 +588,15 @@ function buildNotes() {
   if (document.getElementById('togPolling').checked) s.push('Polling location');
   if (document.getElementById('togRights').checked) s.push('Rights info');
   if (document.getElementById('togEvents').checked) s.push('Events');
+  if (document.getElementById('togWorkersRights').checked) s.push("Workers' rights info");
   if (s.length) parts.push(`\nSupport: ${s.join(', ')}`);
   return parts.join('\n');
 }
 
 function resetForm() {
-  const keepIds = new Set(['canvassAddress', 'canvassDate', 'canvassTime', 'canvasserEmail']);
+  const keepIds = new Set(['canvassAddress', 'canvassDate', 'canvassTime', 'canvasserName']);
   document.querySelectorAll('input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="time"],textarea').forEach(el => { if (!keepIds.has(el.id)) el.value = ''; });
+  document.getElementById('canvassTime').value = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
   document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
   document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
   document.querySelectorAll('.option.selected').forEach(el => el.classList.remove('selected'));
@@ -581,11 +605,14 @@ function resetForm() {
   document.getElementById('pollingResult').classList.remove('visible');
   document.getElementById('rightsInfo').style.display = 'none';
   document.getElementById('eligibleContactsBox').style.display = 'none';
+  document.getElementById('issuesOther').style.display = 'none';
+  document.getElementById('langOther').style.display = 'none';
   document.getElementById('statusMsg').className = 'status-msg';
   updateProgress();
 }
 
 document.getElementById('canvassDate').value = new Date().toISOString().split('T')[0];
+document.getElementById('canvassTime').value = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 setLang('en');
 </script>
 </body>
