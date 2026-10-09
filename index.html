@@ -109,19 +109,7 @@ textarea{resize:vertical;min-height:80px}
 
 </div>
 
-<details class="setup-bar" id="setupBar">
-  <summary>⚙️ Airtable Connection Settings</summary>
-  <div class="setup-fields">
-    <label>Personal Access Token</label>
-    <input type="text" id="cfgPat" placeholder="patXXXXXXXX...">
-    <label>Base ID</label>
-    <input type="text" id="cfgBase" placeholder="appXXXXXXXX...">
-    <label>Organization Email</label>
-    <input type="email" id="cfgOrgEmail" placeholder="org@example.com">
-    <button class="save-btn" onclick="saveConfig()">Save</button>
-    <span class="saved-indicator" id="savedMsg">✓ Saved</span>
-  </div>
-</details>
+
 
 <!-- SECTION 1 -->
 <div class="section" data-section="1">
@@ -458,21 +446,12 @@ function setLang(lang) {
   updateProgress();
 }
 
-// ── Config ──
-let CONFIG = { pat: '', baseId: '', orgEmail: '' };
-function saveConfig() {
-  CONFIG.pat = document.getElementById('cfgPat').value.trim();
-  CONFIG.baseId = document.getElementById('cfgBase').value.trim();
-  CONFIG.orgEmail = document.getElementById('cfgOrgEmail').value.trim();
-  try { localStorage.setItem('voterFormConfig', JSON.stringify(CONFIG)); } catch(e) {}
-  const msg = document.getElementById('savedMsg');
-  msg.style.display = 'inline';
-  setTimeout(() => msg.style.display = 'none', 2000);
-}
-try {
-  const saved = localStorage.getItem('voterFormConfig');
-  if (saved) { CONFIG = JSON.parse(saved); document.getElementById('cfgPat').value = CONFIG.pat; document.getElementById('cfgBase').value = CONFIG.baseId; document.getElementById('cfgOrgEmail').value = CONFIG.orgEmail; }
-} catch(e) {}
+// ── Config (locked) ──
+const CONFIG = {
+  pat: 'patBLHOUpOwDOfpGl.6759b9e13dc3aa57ca79ba917ac113b7a3002c026d723fc2ec2ae50425a67426',
+  baseId: 'appwFPvKIZdQbbqeq',
+  orgEmail: 'ryan@tendingthesoil.org'
+};
 
 // ── UI ──
 function selectRadio(el, groupId) {
@@ -517,7 +496,7 @@ function getSelectedChips(groupId) { return Array.from(document.querySelectorAll
 async function submitForm() {
   const btn = document.getElementById('submitBtn');
   const status = document.getElementById('statusMsg');
-  if (!CONFIG.pat || !CONFIG.baseId) { status.className = 'status-msg error'; status.textContent = '⚙️ Open settings and enter your Airtable token and base ID.'; document.getElementById('setupBar').open = true; return; }
+
   const voterName = document.getElementById('voterName').value.trim();
   if (!voterName) { status.className = 'status-msg error'; status.textContent = T[LANG].full_name + '!'; return; }
   btn.disabled = true; status.className = 'status-msg loading'; status.textContent = '...';
