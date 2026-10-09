@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voter Canvass Form — CTUL</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f9fa; --card: #ffffff; --text: #1a1a2e; --text-secondary: #6b7280;
+  --accent: #b23832; --accent-hover: #8f2c28; --accent-bright: #ff5147;
+  --success: #059669; --warning: #d97706; --danger: #dc2626;
+  --border: #e5e7eb; --input-bg: #f9fafb;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1); --radius: 10px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#0f1117;--card:#1a1d2e;--text:#e5e7eb;--text-secondary:#9ca3af;--border:#2d3348;--input-bg:#232640;--shadow:0 1px 3px rgba(0,0,0,0.4);
+  }
+}
+:root[data-theme="dark"]{--bg:#0f1117;--card:#1a1d2e;--text:#e5e7eb;--text-secondary:#9ca3af;--border:#2d3348;--input-bg:#232640;--shadow:0 1px 3px rgba(0,0,0,0.4);}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6}
+*{box-sizing:border-box}
+.container{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+.header{text-align:center;padding:24px 20px 12px;background:linear-gradient(135deg,#b23832,#d44a3a);color:white;border-radius:var(--radius);margin-bottom:0}
+.header h1{margin:12px 0 4px;font-size:1.5rem;font-weight:700}
+.header p{margin:0;opacity:0.85;font-size:0.9rem}
+.lang-bar{display:flex;justify-content:center;gap:6px;background:#8f2c28;padding:10px 16px;border-radius:0 0 var(--radius) var(--radius);margin-bottom:24px;flex-wrap:wrap}
+.lang-btn{padding:6px 16px;border:2px solid rgba(255,255,255,0.4);border-radius:20px;background:transparent;color:white;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:var(--font);transition:all 0.15s}
+.lang-btn:hover{border-color:white;background:rgba(255,255,255,0.1)}
+.lang-btn.active{background:white;color:#b23832;border-color:white}
+.setup-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;box-shadow:var(--shadow)}
+.setup-bar summary{cursor:pointer;font-weight:600;font-size:0.9rem;color:var(--accent)}
+.setup-bar .setup-fields{margin-top:12px}
+.setup-bar input{width:100%;padding:10px 12px;margin-top:6px;margin-bottom:10px;border:1px solid var(--border);border-radius:6px;font-size:0.9rem;background:var(--input-bg);color:var(--text)}
+.setup-bar label{font-size:0.85rem;font-weight:500;color:var(--text-secondary)}
+.setup-bar .save-btn{background:var(--accent);color:white;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.9rem}
+.saved-indicator{color:var(--success);font-size:0.85rem;margin-left:10px;display:none}
+.section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;margin-bottom:16px;box-shadow:var(--shadow);border-top:3px solid var(--accent)}
+.section-title{font-size:1.1rem;font-weight:700;margin:0 0 4px;color:var(--accent)}
+.section-subtitle{font-size:0.85rem;color:var(--text-secondary);margin:0 0 16px}
+label.field-label{display:block;font-size:0.85rem;font-weight:600;margin-bottom:4px;color:var(--text)}
+input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="time"],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:0.95rem;font-family:var(--font);background:var(--input-bg);color:var(--text);margin-bottom:14px;transition:border-color 0.2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(178,56,50,0.2)}
+textarea{resize:vertical;min-height:80px}
+.option-group{margin-bottom:14px}
+.option-group .option{display:flex;align-items:center;gap:10px;padding:10px 14px;margin-bottom:6px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s;font-size:0.95rem}
+.option-group .option:hover{border-color:var(--accent);background:rgba(178,56,50,0.04)}
+.option-group .option.selected{border-color:var(--accent);background:rgba(178,56,50,0.08)}
+.option-group .option input{margin:0;accent-color:var(--accent)}
+.chip-group{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{padding:6px 14px;border:1px solid var(--border);border-radius:20px;font-size:0.85rem;cursor:pointer;transition:all 0.15s;user-select:none}
+.chip.selected{background:var(--accent);color:white;border-color:var(--accent)}
+.decision-box{background:rgba(178,56,50,0.06);border:1px solid rgba(178,56,50,0.2);border-radius:8px;padding:16px;margin:12px 0 14px;display:none}
+.decision-box.visible{display:block}
+.decision-box.warning-box{background:rgba(217,119,6,0.08);border-color:rgba(217,119,6,0.3)}
+.decision-box.success-box{background:rgba(5,150,105,0.08);border-color:rgba(5,150,105,0.3)}
+.decision-box h4{margin:0 0 8px;font-size:0.95rem}
+.decision-box p{margin:0 0 8px;font-size:0.9rem;color:var(--text-secondary)}
+.decision-box a{color:var(--accent);font-weight:600;text-decoration:none}
+.decision-box a:hover{text-decoration:underline}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-label{font-size:0.9rem;flex:1;padding-right:12px}
+.toggle-label .sub{font-size:0.8rem;color:var(--text-secondary);display:block}
+.toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle .slider{position:absolute;inset:0;background:var(--border);border-radius:12px;cursor:pointer;transition:0.2s}
+.toggle .slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:0.2s}
+.toggle input:checked+.slider{background:var(--accent)}
+.toggle input:checked+.slider::before{transform:translateX(20px)}
+.polling-result{background:var(--input-bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:10px;display:none}
+.polling-result.visible{display:block}
+.btn-primary{width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:8px;font-size:1rem;font-weight:700;font-family:var(--font);cursor:pointer;transition:background 0.2s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+.status-msg{text-align:center;padding:14px;border-radius:8px;margin-top:16px;font-weight:600;font-size:0.95rem;display:none}
+.status-msg.success{display:block;background:rgba(5,150,105,0.1);color:var(--success)}
+.status-msg.error{display:block;background:rgba(220,38,38,0.1);color:var(--danger)}
+.status-msg.loading{display:block;background:rgba(178,56,50,0.1);color:var(--accent)}
+.progress-bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:var(--card);padding:8px 16px;border-bottom:1px solid var(--border)}
+.progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;width:0%;transition:width 0.4s ease}
+.progress-text{font-size:0.75rem;color:var(--text-secondary);text-align:center;margin-top:4px}
+</style>
+</head>
+<body>
+
+<div class="progress-bar">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText"></div>
+</div>
+
+<div class="container">
+
+<div class="header">
+  <img src="CTUL_FDA_LOGO_RED_02.svg" alt="CTUL Action Fund" style="height:80px;border-radius:8px;" onerror="this.style.display='none'">
+  <h1 data-t="title">Voter Canvass Form</h1>
+  <p style="opacity:0.85">CTUL Action Fund</p>
+  <p data-t="subtitle" style="font-size:0.8rem;opacity:0.7;margin-top:4px"></p>
+</div>
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">English</button>
+  <button class="lang-btn" onclick="setLang('es')">Español</button>
+
+</div>
+
+<details class="setup-bar" id="setupBar">
+  <summary>⚙️ Airtable Connection Settings</summary>
+  <div class="setup-fields">
+    <label>Personal Access Token</label>
+    <input type="text" id="cfgPat" placeholder="patXXXXXXXX...">
+    <label>Base ID</label>
+    <input type="text" id="cfgBase" placeholder="appXXXXXXXX...">
+    <label>Organization Email</label>
+    <input type="email" id="cfgOrgEmail" placeholder="org@example.com">
+    <button class="save-btn" onclick="saveConfig()">Save</button>
+    <span class="saved-indicator" id="savedMsg">✓ Saved</span>
+  </div>
+</details>
+
+<!-- SECTION 1 -->
+<div class="section" data-section="1">
+  <div class="section-title" data-t="s1_title">📍 Canvass Information</div>
+  <div class="section-subtitle" data-t="s1_sub">Where and when this conversation happened</div>
+  <label class="field-label" data-t="canvass_addr">Canvass Address / Location</label>
+  <input type="text" id="canvassAddress" data-tp="canvass_addr_ph">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div><label class="field-label" data-t="date_label">Date of Canvass</label><input type="date" id="canvassDate"></div>
+    <div><label class="field-label" data-t="time_label">Time of Canvass</label><input type="time" id="canvassTime"></div>
+  </div>
+  <label class="field-label" data-t="canvasser_email">Canvasser's Email</label>
+  <input type="email" id="canvasserEmail" placeholder="name@ctulorganizing.org">
+</div>
+
+<!-- SECTION 2 -->
+<div class="section" data-section="2">
+  <div class="section-title" data-t="s2_title">👤 Voter Contact Information</div>
+  <div class="section-subtitle" data-t="s2_sub">Basic info about the voter</div>
+  <label class="field-label" data-t="full_name">Full Name</label>
+  <input type="text" id="voterName" data-tp="full_name_ph">
+  <label class="field-label" data-t="address">Address</label>
+  <input type="text" id="voterAddress" data-tp="address_ph">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div><label class="field-label" data-t="phone">Phone</label><input type="tel" id="voterPhone" placeholder="(612) 555-0000"></div>
+    <div><label class="field-label" data-t="email">Email</label><input type="email" id="voterEmail" placeholder="voter@email.com"></div>
+  </div>
+  <label class="field-label" data-t="industry">Industry They Work In</label>
+  <input type="text" id="voterIndustry" data-tp="industry_ph">
+  <label class="field-label" data-t="pref_lang">Preferred Language</label>
+  <div class="option-group" id="langGroup">
+    <label class="option selected" onclick="selectRadio(this,'langGroup')"><input type="radio" name="language" value="English" checked> English</label>
+    <label class="option" onclick="selectRadio(this,'langGroup')"><input type="radio" name="language" value="Spanish"> Español</label>
+
+    <label class="option" onclick="selectRadio(this,'langGroup')"><input type="radio" name="language" value="Other"> <span data-t="other">Other</span></label>
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section" data-section="3">
+  <div class="section-title" data-t="s3_title">📋 Most Important Issues</div>
+  <div class="section-subtitle" data-t="s3_sub">Select all that the voter mentioned</div>
+  <div class="chip-group" id="issuesGroup">
+    <span class="chip" onclick="toggleChip(this)" data-t="issue_housing">Housing / Rent</span>
+    <span class="chip" onclick="toggleChip(this)" data-t="issue_jobs">Jobs / Wages</span>
+    <span class="chip" onclick="toggleChip(this)" data-t="issue_health">Healthcare</span>
+    <span class="chip" onclick="toggleChip(this)" data-t="issue_immig">Immigration</span>
+    <span class="chip" onclick="toggleChip(this)" data-t="issue_edu">Education</span>
+    <span class="chip" onclick="toggleChip(this)" data-t="issue_climate">Climate / Environment</span>
+    <span class="chip" onclick="toggleChip(this)" data-t="issue_safety">Public Safety</span>
+    <span class="chip" onclick="toggleChip(this)" data-t="issue_transit">Transportation</span>
+    <span class="chip" onclick="toggleChip(this)" data-t="issue_workers">Workers' Rights</span>
+    <span class="chip" onclick="toggleChip(this)" data-t="issue_child">Childcare</span>
+    <span class="chip" onclick="toggleChip(this)" data-t="other">Other</span>
+  </div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section" data-section="4">
+  <div class="section-title" data-t="s4_title">🗳 Voting Eligibility & Registration</div>
+  <label class="field-label" data-t="eligible_q">Are you eligible to vote?</label>
+  <div class="option-group" id="eligGroup">
+    <label class="option" onclick="selectRadio(this,'eligGroup');handleEligibility('Yes')"><input type="radio" name="eligibility" value="Yes"> <span data-t="yes">Yes</span></label>
+    <label class="option" onclick="selectRadio(this,'eligGroup');handleEligibility('No')"><input type="radio" name="eligibility" value="No"> No</label>
+    <label class="option" onclick="selectRadio(this,'eligGroup');handleEligibility('Unsure')"><input type="radio" name="eligibility" value="Unsure"> <span data-t="unsure">Unsure</span></label>
+  </div>
+
+  <div class="decision-box" id="eligUnsure">
+    <h4 data-t="elig_check_title">🔍 Let's check your eligibility</h4>
+    <p data-t="elig_check_body">Minnesota has broad eligibility. You can vote if you are a U.S. citizen, at least 18 on election day, and have lived in Minnesota for 20+ days.</p>
+    <a href="https://sos.mn.gov/elections-voting/register-to-vote/who-can-vote/" target="_blank" data-t="elig_check_link">→ Check your eligibility on the MN Secretary of State website</a>
+    <p></p>
+    <a href="https://www.sos.mn.gov/elections-voting/spanish/inscribase-para-votar-register-to-vote/" target="_blank" data-t="en_es_elig_check_link">→ Consulta tu elegibilidad en la página web del Secretario de Estado de Minnesota</a>
+    <div style="margin-top:12px;">
+      <label class="field-label" data-t="after_check">After checking:</label>
+      <div class="option-group" id="eligCheckGroup">
+        <label class="option" onclick="selectRadio(this,'eligCheckGroup')"><input type="radio" name="eligCheck" value="Confirmed Eligible"> <span data-t="im_eligible">I'm eligible!</span></label>
+        <label class="option" onclick="selectRadio(this,'eligCheckGroup')"><input type="radio" name="eligCheck" value="Confirmed Ineligible"> <span data-t="not_eligible">I'm not eligible</span></label>
+        <label class="option" onclick="selectRadio(this,'eligCheckGroup')"><input type="radio" name="eligCheck" value="Needs Further Check"> <span data-t="still_unsure">Still not sure</span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="decision-box warning-box" id="eligNo">
+    <h4 data-t="make_diff_title">🤝 You can still make a difference!</h4>
+    <p data-t="make_diff_body">Even if you can't vote yourself, you can help others exercise their right to vote.</p>
+    <label class="field-label" style="margin-top:12px" data-t="know_eligible">Do you know anyone who IS eligible to vote?</label>
+    <div class="option-group" id="knowsEligibleGroup">
+      <label class="option" onclick="selectRadio(this,'knowsEligibleGroup');showEl('eligibleContactsBox')"><input type="radio" name="knowsEligible" value="Yes"> <span data-t="yes">Yes</span></label>
+      <label class="option" onclick="selectRadio(this,'knowsEligibleGroup');hideEl('eligibleContactsBox')"><input type="radio" name="knowsEligible" value="No"> <span data-t="no_notsure">No / Not sure</span></label>
+    </div>
+    <div class="decision-box success-box" id="eligibleContactsBox" style="display:none">
+      <h4 data-t="spread_word">💬 Help spread the word</h4>
+      <p data-t="spread_body_1">Are they registered to vote? If not, they can register at <a href="https://mnvotes.sos.state.mn.us/VoterRegistration/VoterRegistrationMain.aspx" target="_blank">mnvotes.org</a>.</p>
+      <p data-t="spread_body_2">Can you set a plan to talk to the people in your life who are eligible about how important this election is?</p>
+      <label class="field-label" data-t="eligible_notes">Notes about eligible contacts:</label>
+      <textarea id="eligibleContactsNotes" data-tp="eligible_notes_ph"></textarea>
+    </div>
+  </div>
+
+  <label class="field-label" style="margin-top:8px" data-t="registered_q">Are you registered to vote?</label>
+  <div class="option-group" id="regGroup">
+    <label class="option" onclick="selectRadio(this,'regGroup');handleRegistration('Yes')"><input type="radio" name="registered" value="Yes"> <span data-t="yes">Yes</span></label>
+    <label class="option" onclick="selectRadio(this,'regGroup');handleRegistration('No')"><input type="radio" name="registered" value="No"> No</label>
+    <label class="option" onclick="selectRadio(this,'regGroup');handleRegistration('Unsure')"><input type="radio" name="registered" value="Unsure"> <span data-t="unsure">Unsure</span></label>
+  </div>
+
+  <div class="decision-box success-box" id="regYes">
+    <h4 data-t="party_q">What party are you registered with?</h4>
+    <p style="font-size:0.8rem;color:var(--text-secondary)" data-t="party_note">Note: Minnesota does not have party registration — voters choose a party's ballot at the primary.</p>
+    <div class="option-group" id="partyGroup">
+      <label class="option" onclick="selectRadio(this,'partyGroup')"><input type="radio" name="party" value="Democrat"> <span data-t="democrat">Democrat</span></label>
+      <label class="option" onclick="selectRadio(this,'partyGroup')"><input type="radio" name="party" value="Republican"> <span data-t="republican">Republican</span></label>
+      <label class="option" onclick="selectRadio(this,'partyGroup')"><input type="radio" name="party" value="Independent"> <span data-t="independent">Independent</span></label>
+      <label class="option" onclick="selectRadio(this,'partyGroup')"><input type="radio" name="party" value="Prefer Not to Say"> <span data-t="prefer_not">Prefer not to say</span></label>
+    </div>
+  </div>
+
+  <div class="decision-box" id="regHelp">
+    <h4 data-t="register_title">📝 Let's get you registered!</h4>
+    <p data-t="register_body">Minnesota allows same-day voter registration, but registering early saves time at the polls.</p>
+    <p><strong data-t="reg_online">Online:</strong> <a href="https://mnvotes.sos.state.mn.us/VoterRegistration/VoterRegistrationMain.aspx" target="_blank">mnvotes.org</a><a>   |   </a>
+      <a href="https://mnvotes.sos.mn.gov/VoterRegistration/index?culture=es" target="_blank">En español - mnvotes.org</a></p>
+    <p><strong data-t="reg_mail">By mail:</strong> <span data-t="reg_mail_body">Print and mail a form from the Secretary of State</span></p>
+    <p><strong data-t="reg_person">In person:</strong> <span data-t="reg_person_body">Register at your polling place on Election Day — bring proof of residence</span></p>
+    <p><strong data-t="reg_need">You'll need:</strong> <span data-t="reg_need_body">MN ID or last 4 of SSN</span></p>
+  </div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section" data-section="5">
+  <div class="section-title" data-t="s5_title">📊 Voting Plan</div>
+  <label class="field-label" data-t="vote_plan_q">How do you plan to vote?</label>
+  <div class="option-group" id="voteplanGroup">
+    <label class="option" onclick="selectRadio(this,'voteplanGroup')"><input type="radio" name="voteplan" value="By Mail"> <span data-t="by_mail">By mail / absentee</span></label>
+    <label class="option" onclick="selectRadio(this,'voteplanGroup')"><input type="radio" name="voteplan" value="In Person Early Voting"> <span data-t="early_vote">In person — early voting</span></label>
+    <label class="option" onclick="selectRadio(this,'voteplanGroup')"><input type="radio" name="voteplan" value="Election Day"> <span data-t="election_day">In person — Election Day</span></label>
+    <label class="option" onclick="selectRadio(this,'voteplanGroup')"><input type="radio" name="voteplan" value="Undecided"> <span data-t="undecided">Undecided</span></label>
+    <label class="option" onclick="selectRadio(this,'voteplanGroup')"><input type="radio" name="voteplan" value="Not Planning to Vote"> <span data-t="not_voting">Not planning to vote</span></label>
+  </div>
+  <label class="field-label" data-t="keith_q">Are you planning to vote for Keith?</label>
+  <div class="option-group" id="keithGroup">
+    <label class="option" onclick="selectRadio(this,'keithGroup')"><input type="radio" name="keith" value="Yes"> <span data-t="yes">Yes</span></label>
+    <label class="option" onclick="selectRadio(this,'keithGroup')"><input type="radio" name="keith" value="Leaning Yes"> <span data-t="leaning_yes">Leaning yes</span></label>
+    <label class="option" onclick="selectRadio(this,'keithGroup')"><input type="radio" name="keith" value="Undecided"> <span data-t="undecided">Undecided</span></label>
+    <label class="option" onclick="selectRadio(this,'keithGroup')"><input type="radio" name="keith" value="Leaning No"> <span data-t="leaning_no">Leaning no</span></label>
+    <label class="option" onclick="selectRadio(this,'keithGroup')"><input type="radio" name="keith" value="No"> No</label>
+    <label class="option" onclick="selectRadio(this,'keithGroup')"><input type="radio" name="keith" value="Declined to Say"> <span data-t="declined">Declined to say</span></label>
+  </div>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section" data-section="6">
+  <div class="section-title" data-t="s6_title">🤝 Support & Follow-Up</div>
+  <div class="section-subtitle" data-t="s6_sub">What does this person need? Toggle on everything that applies.</div>
+
+  <div class="toggle-row"><div class="toggle-label"><span data-t="tog1">1. Reminder to register to vote</span><span class="sub" data-t="tog1_sub">We'll send registration resources and reminders</span></div><label class="toggle"><input type="checkbox" id="togRegister"><span class="slider"></span></label></div>
+  <div class="toggle-row"><div class="toggle-label"><span data-t="tog2">2. Reminder to vote + how to register</span><span class="sub" data-t="tog2_sub">Voting dates, registration deadline, and instructions</span></div><label class="toggle"><input type="checkbox" id="togVoteReminder"><span class="slider"></span></label></div>
+  <div class="toggle-row"><div class="toggle-label"><span data-t="tog3">3. Needs help finding their polling place</span><span class="sub" data-t="tog3_sub">We'll look up their location based on their address</span></div><label class="toggle"><input type="checkbox" id="togPolling" onchange="handlePollingToggle()"><span class="slider"></span></label></div>
+
+  <div class="polling-result" id="pollingResult">
+    <h4 style="margin:0 0 8px" data-t="poll_find">📍 Find Polling Place</h4>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin:0 0 8px" data-t="poll_hennepin">For Minneapolis / Hennepin County voters:</p>
+    <a href="https://pollfinder.sos.state.mn.us/" target="_blank" style="display:inline-block;background:var(--accent);color:white;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;font-size:0.85rem" data-t="poll_btn">🔍 MN Secretary of State Poll Finder</a>
+    <p style="font-size:0.8rem;margin:10px 0 4px"><strong data-t="or_call">Or call:</strong> Hennepin County Elections — (612) 348-5151</p>
+    <label class="field-label" style="margin-top:10px" data-t="poll_paste">Polling station info (paste result here):</label>
+    <textarea id="pollingInfo" data-tp="poll_paste_ph"></textarea>
+  </div>
+
+  <div class="toggle-row"><div class="toggle-label"><span data-t="tog4">4. Wants to know their voting rights</span><span class="sub" data-t="tog4_sub">Email them a link to voting rights info</span></div><label class="toggle"><input type="checkbox" id="togRights"><span class="slider"></span></label></div>
+
+  <div class="decision-box success-box" id="rightsInfo" style="display:none">
+    <h4 data-t="rights_title">🏛 Voter Rights Resources</h4>
+    <p data-t="rights_body">Minnesota voters have the right to take time off work to vote, vote by absentee ballot, register on Election Day, and receive assistance at the polls.</p>
+    <a href="https://www.sos.state.mn.us/elections-voting/election-day-voting/know-your-rights/" target="_blank">→ MN Secretary of State: Know Your Rights</a><br>
+    <a href="https://www.lwvmn.org/voting-elections/know-your-mn-voting-rights/" target="_blank">→ League of Women Voters MN</a>
+  </div>
+
+  <div class="toggle-row"><div class="toggle-label"><span data-t="tog5">5. Wants to be invited to our events</span><span class="sub" data-t="tog5_sub">Add to event invite list for rallies, town halls, drives</span></div><label class="toggle"><input type="checkbox" id="togEvents"><span class="slider"></span></label></div>
+
+  <label class="field-label" style="margin-top:16px" data-t="notes_label">Notes / Follow-Up Details</label>
+  <textarea id="notes" rows="4" data-tp="notes_ph"></textarea>
+</div>
+
+<button class="btn-primary" id="submitBtn" onclick="submitForm()" data-t="submit_btn">Submit Voter Record</button>
+<div class="status-msg" id="statusMsg"></div>
+
+<div style="text-align:center;margin-top:32px;padding:24px 16px;border-top:2px solid var(--accent);opacity:0.7;">
+  <p style="font-size:0.75rem;color:var(--text-secondary);margin:8px 0 0;">CTUL Action Fund</p>
+  <p style="font-size:0.7rem;color:var(--text-secondary);margin:4px 0 0;">3715 Chicago Ave, Minneapolis, MN 55407</p>
+</div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════════════
+// TRANSLATIONS
+// ══════════════════════════════════════════════════════════════════════════════
+const T = {
+en: {
+  title:"Voter Canvass Form", subtitle:"Record conversations · Connect voters with resources · Build power",
+  s1_title:"📍 Canvass Information", s1_sub:"Where and when this conversation happened",
+  canvass_addr:"Canvass Address / Location", canvass_addr_ph:"e.g. 1500 Cedar Ave S, Minneapolis",
+  date_label:"Date of Canvass", time_label:"Time of Canvass", canvasser_email:"Canvasser's Email",
+  s2_title:"👤 Voter Contact Information", s2_sub:"Basic info about the voter",
+  full_name:"Full Name", full_name_ph:"First and last name",
+  address:"Address", address_ph:"Street address, Minneapolis, MN",
+  phone:"Phone", email:"Email", industry:"Industry They Work In",
+  industry_ph:"e.g. Healthcare, Construction, Food Service",
+  pref_lang:"Preferred Language", other:"Other",
+  s3_title:"📋 Most Important Issues", s3_sub:"Select all that the voter mentioned",
+  issue_housing:"Housing / Rent", issue_jobs:"Jobs / Wages", issue_health:"Healthcare",
+  issue_immig:"Immigration", issue_edu:"Education", issue_climate:"Climate / Environment",
+  issue_safety:"Public Safety", issue_transit:"Transportation", issue_workers:"Workers' Rights", issue_child:"Childcare",
+  s4_title:"🗳 Voting Eligibility & Registration",
+  eligible_q:"Are you eligible to vote?", yes:"Yes", unsure:"Unsure",
+  elig_check_title:"🔍 Let's check your eligibility",
+  elig_check_body:"Minnesota has broad eligibility. You can vote if you are a U.S. citizen, at least 18 on election day, and have lived in Minnesota for 20+ days.",
+  elig_check_link:"→ Check your eligibility on the MN Secretary of State website",
+  en_es_elig_check_link:"→ Consulta tu elegibilidad en la página web del Secretario de Estado de Minnesota",
+  after_check:"After checking:", im_eligible:"I'm eligible!", not_eligible:"I'm not eligible", still_unsure:"Still not sure",
+  make_diff_title:"🤝 You can still make a difference!",
+  make_diff_body:"Even if you can't vote yourself, you can help others exercise their right to vote.",
+  know_eligible:"Do you know anyone who IS eligible to vote?", no_notsure:"No / Not sure",
+  spread_word:"💬 Help spread the word",
+  spread_body_1:"Are they registered to vote? If not, they can register at mnvotes.org.",
+  spread_body_2:"Can you set a plan to talk to the people in your life who are eligible about how important this election is?",
+  eligible_notes:"Notes about eligible contacts:", eligible_notes_ph:"Who are they? Do they need registration help?",
+  registered_q:"Are you registered to vote?",
+  party_q:"What party are you registered with?",
+  party_note:"Note: Minnesota does not have party registration — voters choose a party's ballot at the primary.",
+  democrat:"Democrat", republican:"Republican", independent:"Independent", prefer_not:"Prefer not to say",
+  register_title:"📝 Let's get you registered!",
+  register_body:"Minnesota allows same-day voter registration, but registering early saves time at the polls.",
+  reg_online:"Online:", reg_mail:"By mail:", reg_mail_body:"Print and mail a form from the Secretary of State",
+  reg_person:"In person:", reg_person_body:"Register at your polling place on Election Day — bring proof of residence",
+  reg_need:"You'll need:", reg_need_body:"MN ID or last 4 of SSN",
+  s5_title:"📊 Voting Plan", vote_plan_q:"How do you plan to vote?",
+  by_mail:"By mail / absentee", early_vote:"In person — early voting", election_day:"In person — Election Day",
+  undecided:"Undecided", not_voting:"Not planning to vote",
+  keith_q:"Are you planning to vote for Keith?",
+  leaning_yes:"Leaning yes", leaning_no:"Leaning no", declined:"Declined to say",
+  s6_title:"🤝 Support & Follow-Up", s6_sub:"What does this person need? Toggle on everything that applies.",
+  tog1:"1. Reminder to register to vote", tog1_sub:"We'll send registration resources and reminders",
+  tog2:"2. Reminder to vote + how to register", tog2_sub:"Voting dates, registration deadline, and instructions",
+  tog3:"3. Needs help finding their polling place", tog3_sub:"We'll look up their location based on their address",
+  tog4:"4. Wants to know their voting rights", tog4_sub:"Email them a link to voting rights info",
+  tog5:"5. Wants to be invited to our events", tog5_sub:"Add to event invite list for rallies, town halls, drives",
+  poll_find:"📍 Find Polling Place", poll_hennepin:"For Minneapolis / Hennepin County voters:",
+  poll_btn:"🔍 MN Secretary of State Poll Finder", or_call:"Or call:",
+  poll_paste:"Polling station info (paste result here):", poll_paste_ph:"Voter's polling place name and address...",
+  rights_title:"🏛 Voter Rights Resources",
+  rights_body:"Minnesota voters have the right to take time off work to vote, vote by absentee ballot, register on Election Day, and receive assistance at the polls.",
+  notes_label:"Notes / Follow-Up Details", notes_ph:"Any additional notes about the conversation, follow-up needed, concerns raised...",
+  submit_btn:"Submit Voter Record", progress:"{n} of 6 sections",
+},
+es: {
+  title:"Formulario de Canvass Electoral", subtitle:"Registrar conversaciones · Conectar votantes con recursos · Construir poder",
+  s1_title:"📍 Información del Canvass", s1_sub:"Dónde y cuándo ocurrió esta conversación",
+  canvass_addr:"Dirección / Ubicación del Canvass", canvass_addr_ph:"ej. 1500 Cedar Ave S, Minneapolis",
+  date_label:"Fecha del Canvass", time_label:"Hora del Canvass", canvasser_email:"Correo del Canvasser",
+  s2_title:"👤 Información de Contacto del Votante", s2_sub:"Información básica sobre el votante",
+  full_name:"Nombre Completo", full_name_ph:"Nombre y apellido",
+  address:"Dirección", address_ph:"Dirección, Minneapolis, MN",
+  phone:"Teléfono", email:"Correo Electrónico", industry:"Industria en la que Trabaja",
+  industry_ph:"ej. Salud, Construcción, Servicio de Alimentos",
+  pref_lang:"Idioma Preferido", other:"Otro",
+  s3_title:"📋 Temas Más Importantes", s3_sub:"Seleccione todos los que el votante mencionó",
+  issue_housing:"Vivienda / Alquiler", issue_jobs:"Empleo / Salarios", issue_health:"Salud",
+  issue_immig:"Inmigración", issue_edu:"Educación", issue_climate:"Clima / Medio Ambiente",
+  issue_safety:"Seguridad Pública", issue_transit:"Transporte", issue_workers:"Derechos de los Trabajadores", issue_child:"Cuidado Infantil",
+  s4_title:"🗳 Elegibilidad y Registro para Votar",
+  eligible_q:"¿Es usted elegible para votar?", yes:"Sí", unsure:"No estoy seguro/a",
+  elig_check_title:"🔍 Verifiquemos su elegibilidad",
+  elig_check_body:"Minnesota tiene amplia elegibilidad. Puede votar si es ciudadano de EE.UU., tiene al menos 18 años el día de la elección, y ha vivido en Minnesota por más de 20 días.",
+  elig_check_link:"→ Verifique su elegibilidad en el sitio del Secretario de Estado de MN",
+  after_check:"Después de verificar:", im_eligible:"¡Soy elegible!", not_eligible:"No soy elegible", still_unsure:"Todavía no estoy seguro/a",
+  make_diff_title:"🤝 ¡Aún puede hacer la diferencia!",
+  make_diff_body:"Aunque no pueda votar, puede ayudar a otros a ejercer su derecho al voto.",
+  know_eligible:"¿Conoce a alguien que SÍ sea elegible para votar?", no_notsure:"No / No estoy seguro/a",
+  spread_word:"💬 Ayude a difundir",
+  spread_body_1:"¿Están registrados para votar? Si no, pueden registrarse en mnvotes.org.",
+  spread_body_2:"¿Puede hacer un plan para hablar con las personas elegibles en su vida sobre la importancia de esta elección?",
+  eligible_notes:"Notas sobre contactos elegibles:", eligible_notes_ph:"¿Quiénes son? ¿Necesitan ayuda para registrarse?",
+  registered_q:"¿Está registrado/a para votar?",
+  party_q:"¿Con qué partido está registrado/a?",
+  party_note:"Nota: Minnesota no tiene registro de partido — los votantes eligen la boleta de un partido en la primaria.",
+  democrat:"Demócrata", republican:"Republicano", independent:"Independiente", prefer_not:"Prefiero no decir",
+  register_title:"📝 ¡Regístrese para votar!",
+  register_body:"Minnesota permite el registro de votantes el mismo día, pero registrarse temprano ahorra tiempo en las urnas.",
+  reg_online:"En línea:", reg_mail:"Por correo:", reg_mail_body:"Imprima y envíe un formulario del Secretario de Estado",
+  reg_person:"En persona:", reg_person_body:"Regístrese en su lugar de votación el día de la elección — traiga prueba de residencia",
+  reg_need:"Necesitará:", reg_need_body:"ID de MN o los últimos 4 dígitos de su SSN",
+  s5_title:"📊 Plan de Votación", vote_plan_q:"¿Cómo planea votar?",
+  by_mail:"Por correo / ausente", early_vote:"En persona — votación anticipada", election_day:"En persona — Día de la Elección",
+  undecided:"Indeciso/a", not_voting:"No planea votar",
+  keith_q:"¿Planea votar por Keith?",
+  leaning_yes:"Inclinado a sí", leaning_no:"Inclinado a no", declined:"Prefiere no decir",
+  s6_title:"🤝 Apoyo y Seguimiento", s6_sub:"¿Qué necesita esta persona? Active todo lo que corresponda.",
+  tog1:"1. Recordatorio para registrarse para votar", tog1_sub:"Enviaremos recursos y recordatorios de registro",
+  tog2:"2. Recordatorio para votar + cómo registrarse", tog2_sub:"Fechas de votación, plazos de registro e instrucciones",
+  tog3:"3. Necesita ayuda para encontrar su lugar de votación", tog3_sub:"Buscaremos su ubicación según su dirección",
+  tog4:"4. Quiere conocer sus derechos de votación", tog4_sub:"Enviarle un enlace con información sobre derechos",
+  tog5:"5. Quiere ser invitado/a a nuestros eventos", tog5_sub:"Agregar a la lista de invitaciones para mítines, asambleas",
+  poll_find:"📍 Encontrar Lugar de Votación", poll_hennepin:"Para votantes de Minneapolis / Condado de Hennepin:",
+  poll_btn:"🔍 Buscador de Lugares de Votación de MN", or_call:"O llame:",
+  poll_paste:"Información del lugar de votación (pegue aquí):", poll_paste_ph:"Nombre y dirección del lugar de votación...",
+  rights_title:"🏛 Recursos sobre Derechos del Votante",
+  rights_body:"Los votantes de Minnesota tienen derecho a tomar tiempo libre del trabajo para votar, votar por correo, registrarse el día de la elección y recibir asistencia en las urnas.",
+  notes_label:"Notas / Detalles de Seguimiento", notes_ph:"Notas adicionales sobre la conversación, seguimiento necesario...",
+  submit_btn:"Enviar Registro del Votante", progress:"{n} de 6 secciones",
+},
+};
+
+let LANG = 'en';
+
+function setLang(lang) {
+  LANG = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.documentElement.lang = lang;
+
+  const strings = T[lang];
+  // Update text content
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (strings[key]) el.textContent = strings[key];
+  });
+  // Update placeholders
+  document.querySelectorAll('[data-tp]').forEach(el => {
+    const key = el.getAttribute('data-tp');
+    if (strings[key]) el.placeholder = strings[key];
+  });
+  updateProgress();
+}
+
+// ── Config ──
+let CONFIG = { pat: '', baseId: '', orgEmail: '' };
+function saveConfig() {
+  CONFIG.pat = document.getElementById('cfgPat').value.trim();
+  CONFIG.baseId = document.getElementById('cfgBase').value.trim();
+  CONFIG.orgEmail = document.getElementById('cfgOrgEmail').value.trim();
+  try { localStorage.setItem('voterFormConfig', JSON.stringify(CONFIG)); } catch(e) {}
+  const msg = document.getElementById('savedMsg');
+  msg.style.display = 'inline';
+  setTimeout(() => msg.style.display = 'none', 2000);
+}
+try {
+  const saved = localStorage.getItem('voterFormConfig');
+  if (saved) { CONFIG = JSON.parse(saved); document.getElementById('cfgPat').value = CONFIG.pat; document.getElementById('cfgBase').value = CONFIG.baseId; document.getElementById('cfgOrgEmail').value = CONFIG.orgEmail; }
+} catch(e) {}
+
+// ── UI ──
+function selectRadio(el, groupId) {
+  document.getElementById(groupId).querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected'); el.querySelector('input').checked = true; updateProgress();
+}
+function toggleChip(el) { el.classList.toggle('selected'); updateProgress(); }
+function showEl(id) { document.getElementById(id).style.display = 'block'; }
+function hideEl(id) { document.getElementById(id).style.display = 'none'; }
+function handleEligibility(v) {
+  document.getElementById('eligUnsure').classList.toggle('visible', v==='Unsure');
+  document.getElementById('eligNo').classList.toggle('visible', v==='No');
+}
+function handleRegistration(v) {
+  document.getElementById('regYes').classList.toggle('visible', v==='Yes');
+  document.getElementById('regHelp').classList.toggle('visible', v!=='Yes');
+}
+function handlePollingToggle() {
+  document.getElementById('pollingResult').classList.toggle('visible', document.getElementById('togPolling').checked);
+}
+document.getElementById('togRights').addEventListener('change', function() {
+  document.getElementById('rightsInfo').style.display = this.checked ? 'block' : 'none';
+});
+
+function updateProgress() {
+  const sections = document.querySelectorAll('[data-section]');
+  let filled = 0;
+  sections.forEach(s => {
+    const inputs = s.querySelectorAll('input:not([type=checkbox]):not([type=radio]), textarea, select');
+    const radios = s.querySelectorAll('input[type=radio]:checked');
+    const chips = s.querySelectorAll('.chip.selected');
+    if ((inputs.length && Array.from(inputs).some(i => i.value.trim())) || radios.length || chips.length) filled++;
+  });
+  const pct = Math.round((filled / sections.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = (T[LANG].progress || '{n} of 6 sections').replace('{n}', filled);
+}
+
+function getRadioValue(name) { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null; }
+function getSelectedChips(groupId) { return Array.from(document.querySelectorAll(`#${groupId} .chip.selected`)).map(c => c.textContent.trim()); }
+
+async function submitForm() {
+  const btn = document.getElementById('submitBtn');
+  const status = document.getElementById('statusMsg');
+  if (!CONFIG.pat || !CONFIG.baseId) { status.className = 'status-msg error'; status.textContent = '⚙️ Open settings and enter your Airtable token and base ID.'; document.getElementById('setupBar').open = true; return; }
+  const voterName = document.getElementById('voterName').value.trim();
+  if (!voterName) { status.className = 'status-msg error'; status.textContent = T[LANG].full_name + '!'; return; }
+  btn.disabled = true; status.className = 'status-msg loading'; status.textContent = '...';
+
+  const fields = {
+    "Full Name": voterName,
+    "Address": document.getElementById('voterAddress').value.trim(),
+    "Phone": document.getElementById('voterPhone').value.trim(),
+    "Email": document.getElementById('voterEmail').value.trim(),
+    "Industry": document.getElementById('voterIndustry').value.trim(),
+    "Preferred Language": getRadioValue('language'),
+    "Voting Eligibility": getRadioValue('eligibility'),
+    "Registered to Vote": getRadioValue('registered'),
+    "Voting Plan": getRadioValue('voteplan'),
+    "Planning to Vote for Keith": getRadioValue('keith'),
+    "Contact Status": "Contacted",
+    "Canvasser Email": document.getElementById('canvasserEmail').value.trim(),
+    "Organization Email": CONFIG.orgEmail,
+    "Form Submitted At": new Date().toISOString(),
+    "Date of First Contact": document.getElementById('canvassDate').value || new Date().toISOString().split('T')[0],
+    "Notes": buildNotes(),
+    "Needs Registration Reminder": document.getElementById('togRegister').checked,
+    "Needs Voting Reminder": document.getElementById('togVoteReminder').checked,
+    "Needs Polling Location": document.getElementById('togPolling').checked,
+    "Wants Voting Rights Info": document.getElementById('togRights').checked,
+    "Wants Event Invites": document.getElementById('togEvents').checked,
+    "Follow-Up Needed": document.getElementById('togRegister').checked || document.getElementById('togVoteReminder').checked || document.getElementById('togPolling').checked || document.getElementById('togRights').checked,
+  };
+  const party = getRadioValue('party'); if (party) fields["Party Affiliation"] = party;
+  const eligCheck = getRadioValue('eligCheck'); if (eligCheck) fields["Eligibility Check Result"] = eligCheck;
+  const pollingInfo = document.getElementById('pollingInfo').value.trim(); if (pollingInfo) fields["Polling Station Info"] = pollingInfo;
+  const knowsEligible = getRadioValue('knowsEligible');
+  if (knowsEligible === 'Yes') { fields["Knows Eligible Voters"] = true; const cn = document.getElementById('eligibleContactsNotes').value.trim(); if (cn) fields["Eligible Contacts Notes"] = cn; }
+
+  for (const [key, val] of Object.entries(fields)) { if (val === null || val === undefined || val === '') delete fields[key]; }
+
+  try {
+    const res = await fetch(`https://api.airtable.com/v0/${CONFIG.baseId}/Voters`, {
+      method: 'POST', headers: { Authorization: `Bearer ${CONFIG.pat}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ records: [{ fields }] }),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    status.className = 'status-msg success';
+    status.textContent = `✅ ${voterName} — ID: ${data.records[0].id}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => { if (confirm('Clear form for next voter?')) resetForm(); }, 1500);
+  } catch (err) {
+    status.className = 'status-msg error';
+    status.textContent = `❌ ${err.message.slice(0, 200)}`;
+  }
+  btn.disabled = false;
+}
+
+function buildNotes() {
+  const parts = [];
+  const a = document.getElementById('canvassAddress').value.trim();
+  const d = document.getElementById('canvassDate').value;
+  const t = document.getElementById('canvassTime').value;
+  if (a) parts.push(`Location: ${a}`);
+  if (d) parts.push(`Date: ${d} ${t || ''}`);
+  const n = document.getElementById('notes').value.trim();
+  if (n) parts.push(`\nNotes: ${n}`);
+  const s = [];
+  if (document.getElementById('togRegister').checked) s.push('Registration');
+  if (document.getElementById('togVoteReminder').checked) s.push('Voting reminder');
+  if (document.getElementById('togPolling').checked) s.push('Polling location');
+  if (document.getElementById('togRights').checked) s.push('Rights info');
+  if (document.getElementById('togEvents').checked) s.push('Events');
+  if (s.length) parts.push(`\nSupport: ${s.join(', ')}`);
+  return parts.join('\n');
+}
+
+function resetForm() {
+  document.querySelectorAll('input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="time"],textarea').forEach(el => { if (!el.id.startsWith('cfg')) el.value = ''; });
+  document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+  document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+  document.querySelectorAll('.option.selected').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.chip.selected').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.decision-box').forEach(el => { el.classList.remove('visible'); el.style.display = ''; });
+  document.getElementById('pollingResult').classList.remove('visible');
+  document.getElementById('rightsInfo').style.display = 'none';
+  document.getElementById('eligibleContactsBox').style.display = 'none';
+  document.getElementById('statusMsg').className = 'status-msg';
+  updateProgress();
+}
+
+document.getElementById('canvassDate').value = new Date().toISOString().split('T')[0];
+setLang('en');
+</script>
+</body>
+</html>
