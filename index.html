@@ -571,7 +571,8 @@ function buildNotes() {
 }
 
 function resetForm() {
-  document.querySelectorAll('input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="time"],textarea').forEach(el => { if (!el.id.startsWith('cfg')) el.value = ''; });
+  const keepIds = new Set(['canvassAddress', 'canvassDate', 'canvassTime', 'canvasserEmail']);
+  document.querySelectorAll('input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="time"],textarea').forEach(el => { if (!keepIds.has(el.id)) el.value = ''; });
   document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
   document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
   document.querySelectorAll('.option.selected').forEach(el => el.classList.remove('selected'));
